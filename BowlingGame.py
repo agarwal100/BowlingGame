@@ -4,6 +4,7 @@ class BowlingGame(object):
 		self.score = 0
 		self.rolls = []
 		self.inProgress = False
+		self.gameOver = False
 
 	def __str__(self):
 		stringRep = ""
@@ -21,12 +22,19 @@ class BowlingGame(object):
 		self.score = 0
 		self.rolls = []
 		self.inProgress = False
+		self.gameOver = False
 
 	def addRoll(self,pinsDown):
 		# NOTE: pinsDown is the number of pins that have been knocked down on the current ROLL 
 		# thus, if this is the second roll in the frame and the first roll knocked down 7 pins,
 		# the max value of pinsDown is 3 because 10 is the total number of pins in a frame (3+7=10)
-		if self.inProgress == True: #second roll
+		
+		#Only play 10 frames unless you need fill ball(s)
+		
+		# if self.gameOver:
+		# 	raise IndexError#("Can't add roll after game is over. Try '.startOver'")		
+
+		if (self.inProgress == True) and (self.gameOver == False): #second roll
 			if self.rolls[-1][0] + pinsDown == 10:
 				
 				self.rolls[-1].append('/')
@@ -43,7 +51,8 @@ class BowlingGame(object):
 				self.inProgress = True
 				self.rolls.append([pinsDown])
 
-
+		if len(self.rolls) >= 12 or (len(self.rolls) == 11 and self.rolls[9][0] != 'X') or (len(self.rolls) == 10 and (self.rolls[9][0] != 'X' and self.rolls[9][0] != '/')):
+			self.gameOver = True
 
 
 
@@ -79,7 +88,7 @@ class BowlingGame(object):
 			
 
 			if frame[0] == 'X': #strike
-				print "strike"
+				#print "strike"
 				if i < len(self.rolls)-1:
 					nextFrame = self.rolls[i+1]
 					if nextFrame[0] == 'X': #consecutive strikes
@@ -100,7 +109,7 @@ class BowlingGame(object):
 							
 		
 			elif len(frame) > 1 and frame[1] == '/': #spare
-				print "spare"
+				#print "spare"
 				if i < len(self.rolls)-1:
 					#print "enter"
 					nextFrame = self.rolls[i+1]

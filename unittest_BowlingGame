@@ -94,7 +94,7 @@ class TestBowlingGame(unittest.TestCase):
 
 	def test_scoreSpareNStrike(self):
 		"""This function tests interactions of spares and strikes"""
-		print "********************************"
+
 		#strike and then spare
 		self.myScore.addRoll(10)
 		self.myScore.addRoll(3)
@@ -118,12 +118,57 @@ class TestBowlingGame(unittest.TestCase):
 		self.myScore3.addRoll(10)
 		self.assertEquals(self.myScore3.getScore(),30)
 		self.myScore3.addRoll(3)
+		self.assertEquals(self.myScore3.getScore(),56)
 		self.myScore3.addRoll(3)
-		self.assertEquals(self.myScore3.getScore(),69)
+		self.assertEquals(self.myScore3.getScore(),75)
+	
+	def test_gameLength(self):
+		"""This function tests that the game ends properly"""
+		#frame 10 is strike, so accepts 2 more rolls
+		self.myScore.addRoll(10)#frame #1
+		self.myScore.addRoll(10)#2
+		self.myScore.addRoll(10)#3
+		self.myScore.addRoll(10)#4
+		self.myScore.addRoll(10)#5
+		self.myScore.addRoll(10)#6
+		self.myScore.addRoll(10)#7
+		self.myScore.addRoll(10)#8
+		self.myScore.addRoll(10)#9
+		self.myScore.addRoll(10)#10
+		self.myScore.addRoll(10)# fill ball 1
+		self.myScore.addRoll(10)# fill ball 2
+		self.assertEquals(self.myScore.getScore(),300)#make sure this is 300, the max possible score
+
+		#frame 10 is spare, so accepts 1 more roll
+		self.myScore2.addRoll(10)#frame #1
+		self.myScore2.addRoll(10)#2
+		self.myScore2.addRoll(10)#3
+		self.myScore2.addRoll(10)#4
+		self.myScore2.addRoll(10)#5
+		self.myScore2.addRoll(10)#6
+		self.myScore2.addRoll(10)#7
+		self.myScore2.addRoll(10)#8
+		self.myScore2.addRoll(10)#9
+		self.myScore2.addRoll(5)#10
+		self.myScore2.addRoll(5)
+		self.myScore2.addRoll(4)# fill ball 1
+		self.assertRaises(IndexError,lambda: self.myScore2.addRoll,[10])
+	
+		#frame 10 is an open frame, so does not accept another roll
+		self.myScore3.addRoll(10)#frame #1
+		self.myScore3.addRoll(10)#2
+		self.myScore3.addRoll(10)#3
+		self.myScore3.addRoll(10)#4
+		self.myScore3.addRoll(10)#5
+		self.myScore3.addRoll(10)#6
+		self.myScore3.addRoll(10)#7
+		self.myScore3.addRoll(10)#8
+		self.myScore3.addRoll(10)#9
+		self.myScore3.addRoll(10)#10
 	
 
-
 		
+	
 
 if __name__ == '__main__':
 	unittest.main()
