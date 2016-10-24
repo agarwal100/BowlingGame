@@ -9,14 +9,14 @@ class TestBowlingGame(unittest.TestCase):
 		self.myScore3 = BowlingGame.BowlingGame()
 		# self.myScore4 = BowlingGame.BowlingGame()
 
-	# def test_scoreRolls(self):
-	# 	self.myScore.addRoll(4)
-	# 	self.assertEquals(self.myScore.getScore(),4)
-	# 	self.myScore.addRoll(3)
-	# 	self.assertEquals(self.myScore.getScore(),7)
-	# 	self.myScore.addRoll(6)
-	# 	self.myScore.addRoll(0)
-	# 	self.assertEquals(self.myScore.getScore(),13)
+	def test_scoreRolls(self):
+		self.myScore.addRoll(4)
+		self.assertEquals(self.myScore.getScore(),4)
+		self.myScore.addRoll(3)
+		self.assertEquals(self.myScore.getScore(),7)
+		self.myScore.addRoll(6)
+		self.myScore.addRoll(0)
+		self.assertEquals(self.myScore.getScore(),13)
 
 	def test_scoreSpare(self):
 		"""This function tests interactions of spares"""
@@ -139,6 +139,11 @@ class TestBowlingGame(unittest.TestCase):
 		self.myScore.addRoll(10)# fill ball 2
 		self.assertEquals(self.myScore.getScore(),300)#make sure this is 300, the max possible score
 
+		self.myScore.addRoll(10)# should not actually add, game is over
+		self.assertEquals(self.myScore.getScore(),300)#make sure this does not change 
+		self.assertEquals(len(self.myScore.rolls),12)#make sure this does not change 
+		
+
 		#frame 10 is spare, so accepts 1 more roll
 		self.myScore2.addRoll(10)#frame #1
 		self.myScore2.addRoll(10)#2
@@ -149,10 +154,15 @@ class TestBowlingGame(unittest.TestCase):
 		self.myScore2.addRoll(10)#7
 		self.myScore2.addRoll(10)#8
 		self.myScore2.addRoll(10)#9
-		self.myScore2.addRoll(5)#10
-		self.myScore2.addRoll(5)
+		self.myScore2.addRoll(5)#10a
+		self.myScore2.addRoll(5)#10b
 		self.myScore2.addRoll(4)# fill ball 1
-		#self.assertRaises(IndexError,self.myScore2.addRoll,[10])
+		self.assertEquals(self.myScore2.getScore(),269)
+
+		self.myScore2.addRoll(2)# should not actually add, game is over
+		self.assertEquals(self.myScore2.getScore(),269)#make sure this does not change 
+		self.assertEquals(len(self.myScore2.rolls),11)#make sure this does not change
+		
 	
 		#frame 10 is an open frame, so does not accept another roll
 		self.myScore3.addRoll(10)#frame #1
@@ -164,11 +174,15 @@ class TestBowlingGame(unittest.TestCase):
 		self.myScore3.addRoll(10)#7
 		self.myScore3.addRoll(10)#8
 		self.myScore3.addRoll(10)#9
-		self.myScore3.addRoll(10)#10
-	
+		self.myScore3.addRoll(5)#10a
+		self.myScore3.addRoll(4)#10b
+		self.assertEquals(self.myScore3.getScore(),263)
 
+		self.myScore3.addRoll(2)# should not actually add, game is over
+		self.assertEquals(self.myScore3.getScore(),263)#make sure this does not change 
+		self.assertEquals(len(self.myScore3.rolls),10)#make sure this does not change
 		
 	
-
+		#self.assertRaises(IndexError,self.myScore2.addRoll,[10])
 if __name__ == '__main__':
 	unittest.main()
