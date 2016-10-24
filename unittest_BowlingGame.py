@@ -18,6 +18,16 @@ class TestBowlingGame(unittest.TestCase):
 		self.myScore.addRoll(0)
 		self.assertEquals(self.myScore.getScore(),13)
 
+	def test_startOver(self):
+		"""This function tests that starting over makes score 0 and empties rolls"""
+		self.myScore.addRoll(4)
+		self.myScore.addRoll(3)
+		self.myScore.addRoll(6)
+		self.myScore.addRoll(0)
+		self.myScore.startOver()
+		self.assertEquals(self.myScore.getScore(),0)
+		self.assertEquals(self.myScore.getRolls(),[])
+
 	def test_scoreSpare(self):
 		"""This function tests interactions of spares"""
 		#spare and then one roll inProgress
