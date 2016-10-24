@@ -7,7 +7,7 @@ class TestBowlingGame(unittest.TestCase):
 		self.myScore = BowlingGame.BowlingGame()
 		self.myScore2 = BowlingGame.BowlingGame()
 		self.myScore3 = BowlingGame.BowlingGame()
-		# self.myScore4 = BowlingGame.BowlingGame()
+		
 
 	def test_scoreRolls(self):
 		self.myScore.addRoll(4)
@@ -191,6 +191,35 @@ class TestBowlingGame(unittest.TestCase):
 		self.myScore3.addRoll(2)# should not actually add, game is over
 		self.assertEquals(self.myScore3.getScore(),263)#make sure this does not change 
 		self.assertEquals(len(self.myScore3.rolls),10)#make sure this does not change
+
+
+
+		#frame 10 is an open frame, so does not accept another roll
+		self.myScore4 = BowlingGame.BowlingGame()
+		self.myScore4.addRoll(3)#frame #1
+		self.myScore4.addRoll(2)#1b
+		self.myScore4.addRoll(10)#2
+		self.myScore4.addRoll(10)#3
+		self.myScore4.addRoll(4)#4
+		self.myScore4.addRoll(4)#4b
+		self.myScore4.addRoll(2)#5
+		self.myScore4.addRoll(8)#5b
+		self.myScore4.addRoll(10)#6
+		self.myScore4.addRoll(2)#7
+		self.myScore4.addRoll(1)#7b
+		self.myScore4.addRoll(3)#8
+		self.myScore4.addRoll(2)#8b
+		self.myScore4.addRoll(2)#9
+		self.myScore4.addRoll(6)#9b
+		self.myScore4.addRoll(5)#10a
+		self.myScore4.addRoll(5)#10b
+		self.myScore4.addRoll(2)# fill ball for spare
+		self.assertEquals(self.myScore4.getScore(),116)#make sure scoring is correct 
+		self.assertEquals(len(self.myScore4.rolls),11)#make sure frames are correct
+
+		self.myScore4.addRoll(2)# should not add, game over
+		self.assertEquals(self.myScore4.getScore(),116)#make sure this does not change 
+		self.assertEquals(len(self.myScore4.rolls),11)#make sure this does not change
 		
 	
 		#self.assertRaises(IndexError,self.myScore2.addRoll,[10])

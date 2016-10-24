@@ -69,8 +69,6 @@ class BowlingGame(object):
 		newScore = 0
 		for i in range(len(self.rolls)):
 			frame = self.rolls[i]
-			
-
 			if frame[0] == 'X': #strike
 				
 				if i < len(self.rolls)-1:
@@ -98,7 +96,7 @@ class BowlingGame(object):
 					else:	
 						newScore += 10 + nextFrame[0] 						
 			else:
-				if len(self.rolls) <11:
+				if i<10:
 					newScore += sum(frame)
 		self.score = newScore		
 
